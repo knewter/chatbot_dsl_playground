@@ -10,7 +10,8 @@ defmodule ChatbotDslPlaygroundTest do
              false
        }
 
-  @tableflip_response %Response{message: "(╯°□°）╯︵ ┻━┻"}
+  @tableflip_response_old %Response{message: "(╯°□°）╯︵ ┻━┻"}
+  @tableflip_response %{struct: Response, message: "(╯°□°）╯︵ ┻━┻"}
 
   @ast2 {:if, {
                :input,
@@ -23,6 +24,19 @@ defmodule ChatbotDslPlaygroundTest do
   @input "Bob is filthy"
   @bad_input "Bob is clean"
 
+  @json_ast """
+       ["tuple",
+         ["atom", "if"],
+         ["tuple",
+               ["atom", "input"],
+               ["atom", "contains"],
+               ["string", "filthy"]
+         ],
+         ["atom", "true"],
+         ["atom", "false"]
+       ]
+  """
+
   test "we can evaluate some AST" do
     compiled = @ast |> Compiler.compile
     assert compiled.(@input) == true
@@ -33,5 +47,12 @@ defmodule ChatbotDslPlaygroundTest do
     compiled = @ast2 |> Compiler.compile
     assert compiled.(":tableflip:") == @tableflip_response
     assert compiled.("anything else") == nil
+  end
+
+  test "we can evaluate the json AST" do
+    ast = JsonAstConverter.convert(@json_ast)
+    compiled = ast |> Compiler.compile
+    assert compiled.(@input) == true
+    assert compiled.(@bad_input) == false
   end
 end
