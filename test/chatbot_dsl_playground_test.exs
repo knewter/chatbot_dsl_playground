@@ -10,8 +10,7 @@ defmodule ChatbotDslPlaygroundTest do
              false
        }
 
-  @tableflip_response_old %Response{message: "(╯°□°）╯︵ ┻━┻"}
-  @tableflip_response %{struct: Response, message: "(╯°□°）╯︵ ┻━┻"}
+  @tableflip_response %Response{message: "(╯°□°）╯︵ ┻━┻"}
 
   @ast2 {:if, {
                :input,
