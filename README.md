@@ -1,5 +1,4 @@
-ChatbotDslPlayground
-====================
+## ChatbotDslPlayground
 
-Just a little visual programmling language that compiles down to
+Just a little visual programming language that compiles down to
 Elixir...eventually
