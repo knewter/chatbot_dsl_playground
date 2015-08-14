@@ -14,7 +14,7 @@ defmodule ChatbotDslPlaygroundTest do
   @bad_input "Bob is clean"
 
   test "we can evaluate some AST" do
-    compiled = @ast |> Evaluator.evaluate
+    compiled = @ast |> Compiler.compile
     assert compiled.(@input) == true
     assert compiled.(@bad_input) == false
   end

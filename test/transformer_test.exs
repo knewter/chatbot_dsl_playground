@@ -1,4 +1,4 @@
-defmodule CompilerTest do
+defmodule TransformerTest do
   use ExUnit.Case
 
   @ast {:if, {
@@ -18,7 +18,7 @@ defmodule CompilerTest do
                    else: false]]}
 
   test "we can compile our AST into the Elixir AST" do
-    compiled = @ast |> Compiler.generate_elixir
+    compiled = @ast |> Transformer.generate_elixir
     assert compiled == @elixir_ast
   end
 end

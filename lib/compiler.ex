@@ -1,18 +1,10 @@
 defmodule Compiler do
-  def generate_elixir(ast) do
-    do_generate_elixir(ast)
-  end
+  def compile(ast) do
+    quoted = Transformer.generate_elixir(ast)
 
-  def do_generate_elixir({:if, conditional, first, second}) do
-    {:if, [context: Elixir, import: Kernel],
-      [handle_conditional(conditional),
-        [do: first,
-         else: second]]}
-  end
-
-  def handle_conditional({var, :contains, val}) do
-     {:=~, [context: Elixir, import: Kernel],
-       [{:var!, [context: Elixir, import: Kernel], [{var, [], Elixir}]},
-          val]}
+    fn(input) ->
+      {val, _binding} = Code.eval_quoted(quoted, [input: input])
+      val
+    end
   end
 end
