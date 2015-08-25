@@ -30,6 +30,8 @@ defmodule ChatbotDSL.Chatbot do
   @moduledoc """
   The Chatbot is a GenServer that is used to idle in an xmpp chatroom and
   respond to messages, as a logged-in user.
+
+      iex> {:ok, pid} = ChatbotDSL.Chatbot.start_link{%ChatbotDSL.Chatbot.State{}}
   """
 
   ## Client API
