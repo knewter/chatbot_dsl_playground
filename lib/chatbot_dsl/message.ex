@@ -1,3 +1,3 @@
 defmodule ChatbotDSL.Message do
-  defstruct []
+  defstruct body: ""
 end

@@ -2,7 +2,7 @@ defmodule ChatbotDSL.CompilerTest do
   use ExUnit.Case
   alias ChatbotDSL.Compiler
   alias ChatbotDSL.JsonAstConverter
-  alias ChatbotDSL.Response
+  alias ChatbotDSL.Message
 
   @ast {:if, [
                {
@@ -17,7 +17,7 @@ defmodule ChatbotDSL.CompilerTest do
              ]
        }
 
-  @tableflip_response %Response{message: "(╯°□°）╯︵ ┻━┻"}
+  @tableflip_response %Message{body: "(╯°□°）╯︵ ┻━┻"}
 
   @ast2 {:if, {
                 :contains,

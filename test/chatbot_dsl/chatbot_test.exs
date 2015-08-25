@@ -1,10 +1,12 @@
 defmodule ChatbotDSL.ChatbotRuleTestModule do
   def apply(%ChatbotDSL.Message{}) do
-    %ChatbotDSL.Response{}
+    %ChatbotDSL.Message{body: "A response!"}
   end
 end
 
 defmodule ChatbotDSL.ChatbotTest do
+  alias ChatbotDSL.Message
+  alias ChatbotDSL.Response
   alias ChatbotDSL.Chatbot
   alias ChatbotDSL.ChatbotRuleTestModule
   use ExUnit.Case
@@ -17,5 +19,12 @@ defmodule ChatbotDSL.ChatbotTest do
   test "starting a chatbot with its rules" do
     rules = [ChatbotRuleTestModule]
     {:ok, pid} = Chatbot.start_link(rules)
+  end
+
+  test "starting a chatbot and sending it a message to evaluate" do
+    rules = [ChatbotRuleTestModule]
+    {:ok, pid} = Chatbot.start_link(rules)
+    message = %Message{body: "giggity"}
+    assert %Response{messages: [%Message{body: "A response!"}]} == Chatbot.evaluate_message(pid, message)
   end
 end
