@@ -37,6 +37,7 @@ config :hedwig,
         "general@conference.localhost"
       ],
       handlers: [
+        {ChatbotDSL.Handler, %{}}
       ]
     }
   ]
