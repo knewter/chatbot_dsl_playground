@@ -29,4 +29,10 @@ defmodule ChatbotDSL.ChatbotTest do
     assert %Response{messages: [%Message{body: "A response!"}]} == Chatbot.evaluate_message(pid, message)
   end
 
+  test "starting a chatbot with a function rule" do
+    rules = [fn(%ChatbotDSL.Message{}) -> %ChatbotDSL.Message{body: "another response"} end]
+    {:ok, pid} = Chatbot.start_link(%State{rules: rules})
+    message = %Message{body: "giggity"}
+    assert %Response{messages: [%Message{body: "another response"}]} == Chatbot.evaluate_message(pid, message)
+  end
 end
