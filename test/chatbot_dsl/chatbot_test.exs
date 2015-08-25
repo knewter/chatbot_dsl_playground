@@ -18,7 +18,7 @@ defmodule ChatbotDSL.ChatbotTest do
 
   test "starting a chatbot with its rules" do
     rules = [ChatbotRuleTestModule]
-    {:ok, pid} = Chatbot.start_link(rules)
+    assert {:ok, _pid} = Chatbot.start_link(rules)
   end
 
   test "starting a chatbot and sending it a message to evaluate" do

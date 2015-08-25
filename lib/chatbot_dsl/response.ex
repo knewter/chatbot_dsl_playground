@@ -16,7 +16,7 @@ defmodule ChatbotDSL.Response do
       # is stopped before completing.  I can't think through all of the reasons
       # this might happen, but basically your return value isn't used so you
       # just define this clause so that you adhere to the protocol.
-      source, :halt -> :ok
+      _source, :halt -> :ok
     end}
   end
 end
