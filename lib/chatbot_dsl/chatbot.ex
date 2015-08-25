@@ -4,6 +4,7 @@ end
 
 defmodule ChatbotDSL.Chatbot do
   use GenServer
+  alias ChatbotDSL.Chatbot.State
 
   @moduledoc """
   The Chatbot is a GenServer that is used to idle in an xmpp chatroom and
@@ -21,9 +22,9 @@ defmodule ChatbotDSL.Chatbot do
   Starts and links a Chatbot
   # A 'rules' is a list of modules that implement an `apply/1` method that accepts a `%ChatbotDSL.Message{}` and returns a `%ChatbotDSL.Response{}`
   """
-  @spec start_link(list(rule)) :: {:ok, pid}
-  def start_link(rules \\ []) do
-    GenServer.start_link(__MODULE__, rules)
+  @spec start_link(%State{}) :: {:ok, pid}
+  def start_link(state=%State{} \\ %State{}) do
+    GenServer.start_link(__MODULE__, state)
   end
 
   @doc """
@@ -35,8 +36,8 @@ defmodule ChatbotDSL.Chatbot do
   end
 
   ## Server API
-  def init(rules) do
-    {:ok, %ChatbotDSL.Chatbot.State{rules: rules}}
+  def init(%State{}=state) do
+    {:ok, state}
   end
 
   def handle_call({:evaluate_message, message}, _from, state) do
