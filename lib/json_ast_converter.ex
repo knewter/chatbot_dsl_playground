@@ -4,19 +4,20 @@ defmodule JsonAstConverter do
     |> do_convert
   end
 
-  def do_convert(["tuple"|rest]) do
-    build_tuple(rest, {})
+  def do_convert(%{"type" => "if", "arguments" => arguments}) do
+    {:if, Enum.map(arguments, &do_convert/1)}
   end
-  def do_convert(["atom", word]) do
+  def do_convert(%{"type" => "atom", "arguments" => [word]}) do
     String.to_atom(word)
   end
-  def do_convert(["string", word]) do
+  def do_convert(%{"type" => "string", "arguments" => [word]}) do
     word
   end
-
-  def build_tuple([head|rest], acc) do
-    acc2 = :erlang.append_element(acc, do_convert(head))
-    build_tuple(rest, acc2)
+  def do_convert(%{"type" => "contains", "arguments" => arguments}) do
+    {:contains, Enum.map(arguments, &do_convert/1)}
   end
-  def build_tuple([], acc), do: acc
+  def do_convert(%{"type" => "var", "arguments" => [var]}) do
+    {:var, do_convert(var)}
+  end
+  def do_convert(x) when is_binary(x), do: x
 end

@@ -2,25 +2,33 @@ defmodule JsonAstConverterTest do
   use ExUnit.Case
 
   @json_ast """
-       ["tuple",
-         ["atom", "if"],
-         ["tuple",
-               ["atom", "input"],
-               ["atom", "contains"],
-               ["string", "filthy"]
-         ],
-         ["atom", "true"],
-         ["atom", "false"]
-       ]
+  {
+    "type": "if",
+    "arguments": [
+      {
+        "type": "contains",
+        "arguments": [
+          {"type": "var", "arguments": [{"type": "atom", "arguments": ["input"]}]},
+          {"type": "string", "arguments": ["filthy"]}
+        ]
+      },
+      {"type": "atom", "arguments": ["true"]},
+      {"type": "atom", "arguments": ["false"]}
+    ]
+  }
   """
 
-  @ast {:if, {
-               :input,
-               :contains,
-               "filthy"
-             },
-             true,
-             false
+  @ast {:if, [
+               {
+                 :contains,
+                 [
+                   {:var, :input},
+                   "filthy"
+                 ]
+               },
+               true,
+               false
+             ]
        }
 
   test "converting our basic ast from JSON" do

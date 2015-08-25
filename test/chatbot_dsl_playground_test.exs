@@ -1,39 +1,49 @@
 defmodule ChatbotDslPlaygroundTest do
   use ExUnit.Case
 
-  @ast {:if, {
-               :input,
-               :contains,
-               "filthy"
-             },
-             true,
-             false
+  @ast {:if, [
+               {
+                 :contains,
+                 [
+                   {:var, :input},
+                   "filthy"
+                 ]
+               },
+               true,
+               false
+             ]
        }
 
   @tableflip_response %Response{message: "(╯°□°）╯︵ ┻━┻"}
 
   @ast2 {:if, {
-               :input,
-               :contains,
-               ":tableflip:"
-             },
-             @tableflip_response
+                :contains,
+                [
+                  {:var, :input},
+                  ":tableflip:"
+                ]
+              },
+              @tableflip_response
         }
 
   @input "Bob is filthy"
   @bad_input "Bob is clean"
 
   @json_ast """
-       ["tuple",
-         ["atom", "if"],
-         ["tuple",
-               ["atom", "input"],
-               ["atom", "contains"],
-               ["string", "filthy"]
-         ],
-         ["atom", "true"],
-         ["atom", "false"]
-       ]
+  {
+    "type": "if",
+    "arguments": [
+      {
+        "type": "contains",
+        "arguments": [
+          {"type": "var", "arguments": [{"type": "atom", "arguments": ["input"]}]},
+          {"type": "string", "arguments": ["filthy"]}
+        ]
+      },
+      {"type": "atom", "arguments": ["true"]},
+      {"type": "atom", "arguments": ["false"]}
+    ]
+  }
   """
 
   test "we can evaluate some AST" do

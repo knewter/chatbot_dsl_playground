@@ -4,23 +4,25 @@ defmodule Transformer do
   end
 
   # if-else
-  def do_generate_elixir({:if, conditional, first, second}) do
+  def do_generate_elixir({:if, [conditional, first, second]}) do
     {:if, [context: Elixir, import: Kernel],
       [handle_conditional(conditional),
         [do: Macro.escape(first),
          else: Macro.escape(second)]]}
   end
-
   # if
   def do_generate_elixir({:if, conditional, first}) do
     {:if, [context: Elixir, import: Kernel],
       [handle_conditional(conditional),
         [do: Macro.escape(first)]]}
   end
+  def do_generate_elixir({:var, var}) do
+       {:var!, [context: Elixir, import: Kernel], [{var, [], Elixir}]}
+  end
+  def do_generate_elixir(x) when is_binary(x), do: x
 
-  def handle_conditional({var, :contains, val}) do
+  def handle_conditional({:contains, [left, right]}) do
      {:=~, [context: Elixir, import: Kernel],
-       [{:var!, [context: Elixir, import: Kernel], [{var, [], Elixir}]},
-          val]}
+       [do_generate_elixir(left), do_generate_elixir(right)]}
   end
 end

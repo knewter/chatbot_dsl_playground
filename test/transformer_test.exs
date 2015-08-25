@@ -1,13 +1,17 @@
 defmodule TransformerTest do
   use ExUnit.Case
 
-  @ast {:if, {
-               :input,
-               :contains,
-               "filthy"
-             },
-             true,
-             false
+  @ast {:if, [
+               {
+                 :contains,
+                 [
+                   {:var, :input},
+                   "filthy"
+                 ]
+               },
+               true,
+               false
+             ]
        }
 
   @elixir_ast {:if, [context: Elixir, import: Kernel],
