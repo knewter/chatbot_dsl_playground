@@ -6,13 +6,15 @@ defmodule ChatbotDSLPlayground do
 
     :pg2.create(:chatbots)
 
-    children = [
-      worker(ChatbotDSL.Chatbot, [%ChatbotDSL.Chatbot.State{rules: [
-              fn(%ChatbotDSL.Message{body: body}) ->
-                %ChatbotDSL.Message{body: String.upcase(body)}
-              end
-            ]}])
-    ]
+    children = []
+    if(Mix.env == :dev) do
+      children = [
+        worker(ChatbotDSL.Chatbot, [%ChatbotDSL.Chatbot.State{rules: [
+          fn(%ChatbotDSL.Message{body: body}) ->
+            %ChatbotDSL.Message{body: String.upcase(body)}
+          end
+        ]}]) | children]
+    end
 
     opts = [strategy: :one_for_one, name: ChatbotDSLPlayground.Supervisor]
     Supervisor.start_link(children, opts)
