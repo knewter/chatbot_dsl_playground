@@ -1,1 +1,4 @@
-%{"poison": {:hex, :poison, "1.4.0"}}
+%{"exml": {:git, "git://github.com/paulgray/exml.git", "d04d0dfc956bd2bf5d9629a7524c6840eb02df28", []},
+  "hedwig": {:hex, :hedwig, "0.1.0"},
+  "inch_ex": {:hex, :inch_ex, "0.4.0"},
+  "poison": {:hex, :poison, "1.4.0"}}

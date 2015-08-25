@@ -1,7 +1,13 @@
 defmodule ChatbotDSL.Chatbot.State do
   @moduledoc """
   The internal state for a Chatbot.
+
+  This chatbot will be proxied to by a global Hedwig connection.  It just
+  serves as a 'bucket' to hold a given ruleset, but each Chatbot is actually
+  servicing the same XMPP connection for now.  I would expect this to change,
+  but not terribly soon.
   """
+
 
   @typedoc """
   A rule can be implemented as either a module or a function.
@@ -44,8 +50,20 @@ defmodule ChatbotDSL.Chatbot do
     GenServer.call(pid, {:evaluate_message, message})
   end
 
+  @doc """
+  Scatters a message to all chatbots and gathers their responses.
+  """
+  @spec scatter_gather(ChatbotDSL.Message.t) :: list(ChatbotDSL.Response.t)
+  def scatter_gather(%ChatbotDSL.Message{}=message) do
+    for pid <- :pg2.get_members(:chatbots) do
+      # FIXME: Doing this with Tasks makes more sense but YOLO
+      evaluate_message(pid, message)
+    end
+  end
+
   ## Server API
   def init(%State{}=state) do
+    :pg2.join(:chatbots, self)
     {:ok, state}
   end
 

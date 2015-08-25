@@ -22,3 +22,21 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+config :hedwig,
+  clients: [
+    %{
+      jid: "user2@localhost",
+      password: "mypass",
+      nickname: "chatbot",
+      resource: "lappitytoppity",
+      config: %{ # This is only necessary if you need to override the defaults.
+        server: "localhost",
+        port: 5222
+      },
+      rooms: [
+        "general@conference.localhost"
+      ],
+      handlers: [
+      ]
+    }
+  ]

@@ -14,7 +14,10 @@ defmodule ChatbotDSLPlayground.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [
+      applications: [:logger, :hedwig, :exml],
+      mod: {ChatbotDSLPlayground, []}
+    ]
   end
 
   # Dependencies can be Hex packages:
@@ -28,7 +31,10 @@ defmodule ChatbotDSLPlayground.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:poison, "~> 1.4.0"}
+      {:poison, "~> 1.4.0"},
+      {:hedwig, "~> 0.1.0"},
+      {:exml, github: "paulgray/exml"},
+      {:inch_ex, only: :docs}
     ]
   end
 end

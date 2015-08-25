@@ -35,4 +35,11 @@ defmodule ChatbotDSL.ChatbotTest do
     message = %Message{body: "giggity"}
     assert %Response{messages: [%Message{body: "another response"}]} == Chatbot.evaluate_message(pid, message)
   end
+
+  test "after starting a chatbot, it will be listening on the 'chatbots' process group" do
+    rules = [fn(%ChatbotDSL.Message{}) -> %ChatbotDSL.Message{body: "another response"} end]
+    {:ok, pid} = Chatbot.start_link(%State{rules: rules})
+    message = %Message{body: "giggity"}
+    assert [%Response{messages: [%Message{body: "another response"}]}] == Chatbot.scatter_gather(message)
+  end
 end

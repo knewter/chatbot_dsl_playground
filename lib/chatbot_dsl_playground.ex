@@ -4,6 +4,8 @@ defmodule ChatbotDSLPlayground do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    :pg2.create(:chatbots)
+
     children = [
     ]
 
