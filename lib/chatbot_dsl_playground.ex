@@ -1,4 +1,4 @@
-defmodule ChatbotDslPlayground do
+defmodule ChatbotDSLPlayground do
   use Application
 
   def start(_type, _args) do
@@ -7,7 +7,7 @@ defmodule ChatbotDslPlayground do
     children = [
     ]
 
-    opts = [strategy: :one_for_one, name: ChatbotDslPlayground.Supervisor]
+    opts = [strategy: :one_for_one, name: ChatbotDSLPlayground.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

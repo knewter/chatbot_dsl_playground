@@ -1,4 +1,4 @@
-defmodule ChatbotDslPlaygroundTest do
+defmodule ChatbotDSLPlaygroundTest do
   use ExUnit.Case
 
 end

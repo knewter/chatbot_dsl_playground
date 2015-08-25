@@ -1,4 +1,4 @@
-defmodule ChatbotDslPlayground.Mixfile do
+defmodule ChatbotDSLPlayground.Mixfile do
   use Mix.Project
 
   def project do
