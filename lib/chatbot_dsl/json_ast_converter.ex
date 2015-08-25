@@ -1,4 +1,4 @@
-defmodule JsonAstConverter do
+defmodule ChatbotDSL.JsonAstConverter do
   def convert(json) do
     Poison.decode!(json)
     |> do_convert

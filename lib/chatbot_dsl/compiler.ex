@@ -1,6 +1,6 @@
-defmodule Compiler do
+defmodule ChatbotDSL.Compiler do
   def compile(ast) do
-    quoted = Transformer.generate_elixir(ast)
+    quoted = ChatbotDSL.Transformer.generate_elixir(ast)
 
     fn(input) ->
       {val, _binding} = Code.eval_quoted(quoted, [input: input])

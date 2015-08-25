@@ -1,5 +1,6 @@
-defmodule JsonAstConverterTest do
+defmodule ChatbotDSL.JsonAstConverterTest do
   use ExUnit.Case
+  alias ChatbotDSL.JsonAstConverter
 
   @json_ast """
   {

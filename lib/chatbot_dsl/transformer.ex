@@ -1,4 +1,4 @@
-defmodule Transformer do
+defmodule ChatbotDSL.Transformer do
   def generate_elixir(ast) do
     do_generate_elixir(ast)
   end
