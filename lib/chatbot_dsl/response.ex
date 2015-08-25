@@ -1,11 +1,14 @@
 defmodule ChatbotDSL.Response do
+  alias ChatbotDSL.Message
+
   defstruct messages: []
+  @type t :: %__MODULE__{messages: list(Message.t)}
 
   def into(original) do
     {original, fn
       # Rules that return nil shouldn't affect the response
       source, {:cont, nil} -> source
-      source, {:cont, message=%ChatbotDSL.Message{}} ->
+      source=%__MODULE__{}, {:cont, message=%ChatbotDSL.Message{}} ->
         %__MODULE__{source | messages: [message|source.messages]}
 
       # The next pattern we care about is `done`, which is what is called when
