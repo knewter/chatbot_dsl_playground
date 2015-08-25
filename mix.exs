@@ -3,6 +3,9 @@ defmodule ChatbotDSLPlayground.Mixfile do
 
   def project do
     [app: :chatbot_dsl_playground,
+     name: "Chatbot DSL Playground",
+     source_url: "http://github.com/knewter/chatbot_dsl_playground",
+     homepage_url: "http://github.com/knewter/chatbot_dsl_playground",
      version: "0.0.1",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
@@ -34,7 +37,9 @@ defmodule ChatbotDSLPlayground.Mixfile do
       {:poison, "~> 1.4.0"},
       {:hedwig, "~> 0.1.0"},
       {:exml, github: "paulgray/exml"},
-      {:inch_ex, only: :docs}
+      {:inch_ex, only: :docs},
+      {:earmark, "~> 0.1", only: :dev},
+      {:ex_doc, "~> 0.8", only: :dev}
     ]
   end
 end

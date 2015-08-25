@@ -46,6 +46,9 @@ defmodule ChatbotDSL.Chatbot do
 
   @doc """
   Evaluate a message in the context of the chatbot's current list of rules.
+
+  * The `pid` argument is a `pid`.
+  * The `message` argument is a `%ChatbotDSL.Message{}`.
   """
   @spec evaluate_message(pid, ChatbotDSL.Message.t) :: ChatbotDSL.Response.t
   def evaluate_message(pid, %ChatbotDSL.Message{}=message) do
