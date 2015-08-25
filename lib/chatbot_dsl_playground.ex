@@ -13,11 +13,11 @@ defmodule ChatbotDSLPlayground do
           fn(%ChatbotDSL.Message{body: body}) ->
             %ChatbotDSL.Message{body: String.upcase(body)}
           end,
-          fn(%ChatbotDSL.Message{body: body}) ->
-            if(String.match?(body, ~r/:tableflip:/)) do
-              %ChatbotDSL.Message{body: "(╯°□°）╯︵ ┻━┻"}
-            end
-          end
+          # fn(%ChatbotDSL.Message{body: body}) ->
+          #   if(String.match?(body, ~r/:tableflip:/)) do
+          #     %ChatbotDSL.Message{body: "(╯°□°）╯︵ ┻━┻"}
+          #   end
+          # end
         ]}]) | children]
     end
 

@@ -19,5 +19,8 @@ defmodule ChatbotDSL.JsonAstConverter do
   def do_convert(%{"type" => "var", "arguments" => [var]}) do
     {:var, do_convert(var)}
   end
+  def do_convert(%{"type" => "response", "arguments" => [response]}) do
+    {:response, response}
+  end
   def do_convert(x) when is_binary(x), do: x
 end

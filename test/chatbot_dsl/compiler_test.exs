@@ -17,16 +17,19 @@ defmodule ChatbotDSL.CompilerTest do
              ]
        }
 
-  @tableflip_response %Message{body: "(╯°□°）╯︵ ┻━┻"}
+  @tableflip_string "(╯°□°）╯︵ ┻━┻"
+  @tableflip_response %Message{body: @tableflip_string}
 
-  @ast2 {:if, {
-                :contains,
-                [
-                  {:var, :input},
-                  ":tableflip:"
-                ]
-              },
-              @tableflip_response
+  @ast2 {:if, [
+                {
+                  :contains,
+                  [
+                    {:var, :input},
+                    ":tableflip:"
+                  ]
+                },
+                {:response, @tableflip_string}
+              ]
         }
 
   @input "Bob is filthy"
@@ -49,6 +52,22 @@ defmodule ChatbotDSL.CompilerTest do
   }
   """
 
+  @json_tableflip_ast """
+  {
+    "type": "if",
+    "arguments": [
+      {
+        "type": "contains",
+        "arguments": [
+          {"type": "var", "arguments": [{"type": "atom", "arguments": ["input"]}]},
+          {"type": "string", "arguments": [":tableflip:"]}
+        ]
+      },
+      {"type": "response", "arguments": ["(╯°□°）╯︵ ┻━┻"]}
+    ]
+  }
+  """
+
   test "we can evaluate some AST" do
     compiled = @ast |> Compiler.compile
     assert compiled.(@input) == true
@@ -66,5 +85,12 @@ defmodule ChatbotDSL.CompilerTest do
     compiled = ast |> Compiler.compile
     assert compiled.(@input) == true
     assert compiled.(@bad_input) == false
+  end
+
+  test "we can evaluate the json tableflip AST" do
+    ast = JsonAstConverter.convert(@json_tableflip_ast)
+    compiled = ast |> Compiler.compile
+    assert compiled.(":tableflip:") == @tableflip_response
+    assert compiled.("anything else") == nil
   end
 end
