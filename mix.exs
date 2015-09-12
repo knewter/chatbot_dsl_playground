@@ -40,7 +40,7 @@ defmodule ChatbotDSLPlayground.Mixfile do
       {:inch_ex, only: :docs},
       {:earmark, "~> 0.1", only: :dev},
       {:ex_doc, "~> 0.8", only: :dev},
-      {:dogma, github: "lpil/dogma"}
+      {:dogma, github: "lpil/dogma", only: :dev}
     ]
   end
 end
