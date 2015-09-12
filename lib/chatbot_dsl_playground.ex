@@ -1,4 +1,9 @@
 defmodule ChatbotDSLPlayground do
+  @moduledoc """
+  The ChatbotDSLPlayground is an application that manages a group of chatbots
+  that can have custom rules that they will evaluate against incoming Messages.
+  """
+
   use Application
 
   def start(_type, _args) do

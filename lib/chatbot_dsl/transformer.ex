@@ -1,4 +1,9 @@
 defmodule ChatbotDSL.Transformer do
+  @moduledoc """
+  The ChatbotDSL.Transformer transforms our custom AST into elixir AST
+  structures.
+  """
+
   def generate_elixir(ast) do
     do_generate_elixir(ast)
   end

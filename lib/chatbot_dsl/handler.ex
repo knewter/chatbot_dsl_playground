@@ -7,7 +7,8 @@ defmodule ChatbotDSL.Handler do
   use Hedwig.Handler
 
   def handle_event(%Message{} = msg, opts) do
-    responses = ChatbotDSL.Chatbot.scatter_gather(%ChatbotDSL.Message{body: msg.body})
+    responses = %ChatbotDSL.Message{body: msg.body}
+                |> ChatbotDSL.Chatbot.scatter_gather
     for response <- responses do
       handle_response(msg, response)
     end

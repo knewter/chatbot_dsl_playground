@@ -26,20 +26,36 @@ defmodule ChatbotDSL.ChatbotTest do
     rules = [ChatbotRuleTestModule]
     {:ok, pid} = Chatbot.start_link(%State{rules: rules})
     message = %Message{body: "giggity"}
-    assert %Response{messages: [%Message{body: "A response!"}]} == Chatbot.evaluate_message(pid, message)
+    expected_response = %Response{messages: [%Message{body: "A response!"}]}
+    assert expected_response == Chatbot.evaluate_message(pid, message)
   end
 
   test "starting a chatbot with a function rule" do
-    rules = [fn(%ChatbotDSL.Message{}) -> %ChatbotDSL.Message{body: "another response"} end]
+    rules = [
+      fn(%ChatbotDSL.Message{}) ->
+        %ChatbotDSL.Message{body: "another response"}
+      end
+    ]
     {:ok, pid} = Chatbot.start_link(%State{rules: rules})
     message = %Message{body: "giggity"}
-    assert %Response{messages: [%Message{body: "another response"}]} == Chatbot.evaluate_message(pid, message)
+    expected_response = %Response{messages: [
+                          %Message{body: "another response"}
+                        ]}
+    assert expected_response == Chatbot.evaluate_message(pid, message)
   end
 
-  test "after starting a chatbot, it will be listening on the 'chatbots' process group" do
-    rules = [fn(%ChatbotDSL.Message{}) -> %ChatbotDSL.Message{body: "another response"} end]
+  test "after starting a chatbot, it will be listening on the 'chatbots' \
+        process group" do
+    rules = [
+      fn(%ChatbotDSL.Message{}) ->
+        %ChatbotDSL.Message{body: "another response"}
+      end
+    ]
     {:ok, pid} = Chatbot.start_link(%State{rules: rules})
     message = %Message{body: "giggity"}
-    assert [%Response{messages: [%Message{body: "another response"}]}] == Chatbot.scatter_gather(message)
+    expected_response = [%Response{messages: [
+                          %Message{body: "another response"}
+                        ]}]
+    assert expected_response == Chatbot.scatter_gather(message)
   end
 end

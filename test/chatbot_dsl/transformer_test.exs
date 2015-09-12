@@ -15,10 +15,13 @@ defmodule ChatbotDSL.TransformerTest do
              ]
        }
 
-  @elixir_ast {:if, [context: Elixir, import: Kernel],
-                 [{:=~, [context: Elixir, import: Kernel],
-                   [{:var!, [context: Elixir, import: Kernel], [{:input, [], Elixir}]},
-                      "filthy"]},
+  @elixir_ast {:if,
+                [context: Elixir, import: Kernel],
+                [{:=~, [context: Elixir, import: Kernel],
+                  [{:var!,
+                    [context: Elixir, import: Kernel], [{:input, [], Elixir}]},
+                    "filthy"
+                  ]},
                   [do: true,
                    else: false]]}
 

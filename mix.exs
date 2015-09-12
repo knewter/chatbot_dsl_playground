@@ -34,12 +34,13 @@ defmodule ChatbotDSLPlayground.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:poison, "~> 1.4.0"},
+      {:poison, "~> 1.5.0"},
       {:hedwig, "~> 0.1.0"},
       {:exml, github: "paulgray/exml"},
       {:inch_ex, only: :docs},
       {:earmark, "~> 0.1", only: :dev},
-      {:ex_doc, "~> 0.8", only: :dev}
+      {:ex_doc, "~> 0.8", only: :dev},
+      {:dogma, github: "lpil/dogma"}
     ]
   end
 end

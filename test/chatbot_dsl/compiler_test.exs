@@ -1,7 +1,7 @@
 defmodule ChatbotDSL.CompilerTest do
   use ExUnit.Case
   alias ChatbotDSL.Compiler
-  alias ChatbotDSL.JsonAstConverter
+  alias ChatbotDSL.JSONASTConverter
   alias ChatbotDSL.Message
 
   @ast {:if, [
@@ -42,7 +42,9 @@ defmodule ChatbotDSL.CompilerTest do
       {
         "type": "contains",
         "arguments": [
-          {"type": "var", "arguments": [{"type": "atom", "arguments": ["input"]}]},
+          {"type": "var", "arguments": [
+            {"type": "atom", "arguments": ["input"]}
+          ]},
           {"type": "string", "arguments": ["filthy"]}
         ]
       },
@@ -59,7 +61,9 @@ defmodule ChatbotDSL.CompilerTest do
       {
         "type": "contains",
         "arguments": [
-          {"type": "var", "arguments": [{"type": "atom", "arguments": ["input"]}]},
+          {"type": "var", "arguments": [
+            {"type": "atom", "arguments": ["input"]}
+          ]},
           {"type": "string", "arguments": [":tableflip:"]}
         ]
       },
@@ -70,8 +74,8 @@ defmodule ChatbotDSL.CompilerTest do
 
   test "we can evaluate some AST" do
     compiled = @ast |> Compiler.compile
-    assert compiled.(@input) == true
-    assert compiled.(@bad_input) == false
+    assert compiled.(@input)
+    refute compiled.(@bad_input)
   end
 
   test "responding with a tableflip" do
@@ -81,14 +85,14 @@ defmodule ChatbotDSL.CompilerTest do
   end
 
   test "we can evaluate the json AST" do
-    ast = JsonAstConverter.convert(@json_ast)
+    ast = JSONASTConverter.convert(@json_ast)
     compiled = ast |> Compiler.compile
-    assert compiled.(@input) == true
-    assert compiled.(@bad_input) == false
+    assert compiled.(@input)
+    refute compiled.(@bad_input)
   end
 
   test "we can evaluate the json tableflip AST" do
-    ast = JsonAstConverter.convert(@json_tableflip_ast)
+    ast = JSONASTConverter.convert(@json_tableflip_ast)
     compiled = ast |> Compiler.compile
     assert compiled.(":tableflip:") == @tableflip_response
     assert compiled.("anything else") == nil

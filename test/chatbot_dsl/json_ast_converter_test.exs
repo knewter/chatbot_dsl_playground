@@ -1,6 +1,6 @@
-defmodule ChatbotDSL.JsonAstConverterTest do
+defmodule ChatbotDSL.JSONASTConverterTest do
   use ExUnit.Case
-  alias ChatbotDSL.JsonAstConverter
+  alias ChatbotDSL.JSONASTConverter
 
   @json_ast """
   {
@@ -9,7 +9,9 @@ defmodule ChatbotDSL.JsonAstConverterTest do
       {
         "type": "contains",
         "arguments": [
-          {"type": "var", "arguments": [{"type": "atom", "arguments": ["input"]}]},
+          {"type": "var", "arguments": [
+            {"type": "atom", "arguments": ["input"]}
+          ]},
           {"type": "string", "arguments": ["filthy"]}
         ]
       },
@@ -39,7 +41,9 @@ defmodule ChatbotDSL.JsonAstConverterTest do
       {
         "type": "contains",
         "arguments": [
-          {"type": "var", "arguments": [{"type": "atom", "arguments": ["input"]}]},
+          {"type": "var", "arguments": [
+            {"type": "atom", "arguments": ["input"]}
+          ]},
           {"type": "string", "arguments": [":tableflip:"]}
         ]
       },
@@ -62,9 +66,9 @@ defmodule ChatbotDSL.JsonAstConverterTest do
                  }
 
   test "converting our basic ast from JSON" do
-    assert JsonAstConverter.convert(@json_ast) == @ast
+    assert JSONASTConverter.convert(@json_ast) == @ast
   end
   test "converting our basic ast from JSON" do
-    assert JsonAstConverter.convert(@json_tableflip_ast) == @tableflip_ast
+    assert JSONASTConverter.convert(@json_tableflip_ast) == @tableflip_ast
   end
 end

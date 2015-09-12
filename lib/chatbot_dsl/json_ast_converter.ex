@@ -1,6 +1,13 @@
-defmodule ChatbotDSL.JsonAstConverter do
+defmodule ChatbotDSL.JSONASTConverter do
+  @moduledoc """
+  The JSONASTConverter takes in a JSON AST and returns our custom AST.
+  It exists to allow us to get around the fact that JSON doesn't support
+  tuples and atoms, essentially.
+  """
+
   def convert(json) do
-    Poison.decode!(json)
+    json
+    |> Poison.decode!
     |> do_convert
   end
 

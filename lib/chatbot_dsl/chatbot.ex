@@ -12,8 +12,10 @@ defmodule ChatbotDSL.Chatbot.State do
   @typedoc """
   A rule can be implemented as either a module or a function.
 
-  * The module form implements an `apply/1` function that accepts a `%ChatbotDSL.Message{}` and returns an `%ChatbotDSL.Response{}`
-  * The function form follows the style of the `apply/1` function described above.
+  * The module form implements an `apply/1` function that accepts a
+    `%ChatbotDSL.Message{}` and returns an `%ChatbotDSL.Response{}`
+  * The function form follows the style of the `apply/1` function described
+    above.
   """
   @type rule :: atom | (ChatbotDSL.Message.t -> ChatbotDSL.Response.t)
 
@@ -31,7 +33,8 @@ defmodule ChatbotDSL.Chatbot do
   The Chatbot is a GenServer that is used to idle in an xmpp chatroom and
   respond to messages, as a logged-in user.
 
-      iex> {:ok, pid} = ChatbotDSL.Chatbot.start_link{%ChatbotDSL.Chatbot.State{}}
+      iex> state = %ChatbotDSL.Chatbot.State{}
+      iex> {:ok, pid} = ChatbotDSL.Chatbot.start_link state
   """
 
   ## Client API

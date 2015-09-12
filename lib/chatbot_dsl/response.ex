@@ -1,4 +1,9 @@
 defmodule ChatbotDSL.Response do
+  @moduledoc """
+  A ChatbotDSL.Response is the return value of evaluating a rule against a
+  Chatbot.
+  """
+
   alias ChatbotDSL.Message
 
   defstruct messages: []
