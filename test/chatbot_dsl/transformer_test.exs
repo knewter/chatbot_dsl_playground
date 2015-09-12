@@ -1,7 +1,6 @@
 defmodule ChatbotDSL.TransformerTest do
   use ExUnit.Case
   alias ChatbotDSL.Transformer
-  alias ChatbotDSL.Message
 
   @ast {:if, [
                {
