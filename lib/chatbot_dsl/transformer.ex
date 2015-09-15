@@ -10,19 +10,27 @@ defmodule ChatbotDSL.Transformer do
 
   # if-else
   def do_generate_elixir({:if, [conditional, first, second]}) do
-    {:if, [context: Elixir, import: Kernel],
-      [handle_conditional(conditional),
-        [do: do_generate_elixir(first),
-         else: do_generate_elixir(second)]]}
+    quote do
+      if unquote(handle_conditional(conditional)) do
+        unquote(do_generate_elixir(first))
+      else
+        unquote(do_generate_elixir(second))
+      end
+    end
   end
   # if
   def do_generate_elixir({:if, [conditional, first]}) do
-    {:if, [context: Elixir, import: Kernel],
-      [handle_conditional(conditional),
-        [do: do_generate_elixir(first)]]}
+    quote do
+      if unquote(handle_conditional(conditional)) do
+        unquote(do_generate_elixir(first))
+      end
+    end
   end
   def do_generate_elixir({:var, var}) do
-    {:var!, [context: Elixir, import: Kernel], [{var, [], Elixir}]}
+    {:var!,
+      [context: ChatbotDSL.Transformer, import: Kernel],
+      [{var, [], Elixir}]
+    }
   end
   def do_generate_elixir(x) when is_binary(x), do: x
   def do_generate_elixir({:response, response}) do
@@ -32,7 +40,8 @@ defmodule ChatbotDSL.Transformer do
   def do_generate_elixir(false), do: false
 
   def handle_conditional({:contains, [left, right]}) do
-     {:=~, [context: Elixir, import: Kernel],
-       [do_generate_elixir(left), do_generate_elixir(right)]}
+    quote do
+      unquote(do_generate_elixir(left)) =~ unquote(do_generate_elixir(right))
+    end
   end
 end

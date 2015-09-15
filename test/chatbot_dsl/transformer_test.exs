@@ -16,10 +16,10 @@ defmodule ChatbotDSL.TransformerTest do
        }
 
   @elixir_ast {:if,
-                [context: Elixir, import: Kernel],
-                [{:=~, [context: Elixir, import: Kernel],
+                [context: ChatbotDSL.Transformer, import: Kernel],
+                [{:=~, [context: ChatbotDSL.Transformer, import: Kernel],
                   [{:var!,
-                    [context: Elixir, import: Kernel], [{:input, [], Elixir}]},
+                    [context: ChatbotDSL.Transformer, import: Kernel], [{:input, [], Elixir}]},
                     "filthy"
                   ]},
                   [do: true,
@@ -43,15 +43,15 @@ defmodule ChatbotDSL.TransformerTest do
 
   @tableflip_elixir_ast {
     :if,
-    [context: Elixir, import: Kernel],
+    [context: ChatbotDSL.Transformer, import: Kernel],
     [
       {
         :=~,
-        [context: Elixir, import: Kernel],
+        [context: ChatbotDSL.Transformer, import: Kernel],
         [
           {
             :var!,
-            [context: Elixir, import: Kernel],
+            [context: ChatbotDSL.Transformer, import: Kernel],
             [
               {
                 :body,
