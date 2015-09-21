@@ -11,7 +11,7 @@ defmodule ChatbotDSL.Transformer do
   # if-else
   def do_generate_elixir({:if, [conditional, first, second]}) do
     quote do
-      if unquote(handle_conditional(conditional)) do
+      if unquote(do_generate_elixir(conditional)) do
         unquote(do_generate_elixir(first))
       else
         unquote(do_generate_elixir(second))
@@ -21,7 +21,7 @@ defmodule ChatbotDSL.Transformer do
   # if
   def do_generate_elixir({:if, [conditional, first]}) do
     quote do
-      if unquote(handle_conditional(conditional)) do
+      if unquote(do_generate_elixir(conditional)) do
         unquote(do_generate_elixir(first))
       end
     end
@@ -39,7 +39,7 @@ defmodule ChatbotDSL.Transformer do
   def do_generate_elixir(true), do: true
   def do_generate_elixir(false), do: false
 
-  def handle_conditional({:contains, [left, right]}) do
+  def do_generate_elixir({:contains, [left, right]}) do
     quote do
       unquote(do_generate_elixir(left)) =~ unquote(do_generate_elixir(right))
     end
