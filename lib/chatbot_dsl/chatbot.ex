@@ -71,7 +71,7 @@ defmodule ChatbotDSL.Chatbot do
 
   ## Server API
   def init(%State{}=state) do
-    :pg2.join(:chatbots, self)
+    :ok = :pg2.join(:chatbots, self)
     {:ok, state}
   end
 

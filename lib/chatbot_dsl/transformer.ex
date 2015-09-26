@@ -4,6 +4,10 @@ defmodule ChatbotDSL.Transformer do
   structures.
   """
 
+  @type expression_type :: :if | :contains | :var | :response
+  @type expression :: {expression_type, list(expression)}
+
+  @spec generate_elixir(expression) :: any # really returns an elixir ast
   def generate_elixir(ast) do
     do_generate_elixir(ast)
   end
