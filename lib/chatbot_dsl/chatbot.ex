@@ -20,9 +20,10 @@ defmodule ChatbotDSL.Chatbot.State do
   @type rule :: atom | (ChatbotDSL.Message.t -> ChatbotDSL.Response.t)
 
   @type t :: %__MODULE__{
+    name: String.t,
     rules: list(rule)
   }
-  defstruct rules: []
+  defstruct name: "", rules: []
 end
 
 defmodule ChatbotDSL.Chatbot do
@@ -76,7 +77,7 @@ defmodule ChatbotDSL.Chatbot do
   end
 
   def handle_call({:evaluate_message, message}, _from, state) do
-    response = for rule <- state.rules, into: %ChatbotDSL.Response{} do
+    response = for rule <- state.rules, into: %ChatbotDSL.Response{from: state.name} do
                  ChatbotDSL.Chatbot.apply(rule, message)
                end
     {:reply, response, state}

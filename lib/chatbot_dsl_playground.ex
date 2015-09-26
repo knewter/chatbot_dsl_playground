@@ -14,7 +14,7 @@ defmodule ChatbotDSLPlayground do
     children = []
     if(Mix.env == :dev) do
       children = [
-        worker(ChatbotDSL.Chatbot, [%ChatbotDSL.Chatbot.State{rules: [
+        worker(ChatbotDSL.Chatbot, [%ChatbotDSL.Chatbot.State{name: "upcaser", rules: [
           fn(%ChatbotDSL.Message{body: body}) ->
             %ChatbotDSL.Message{body: String.upcase(body)}
           end,

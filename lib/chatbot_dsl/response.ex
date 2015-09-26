@@ -6,8 +6,8 @@ defmodule ChatbotDSL.Response do
 
   alias ChatbotDSL.Message
 
-  defstruct messages: []
-  @type t :: %__MODULE__{messages: list(Message.t)}
+  @type t :: %__MODULE__{from: String.t, messages: list(Message.t)}
+  defstruct from: "", messages: []
 
   def into(original) do
     {original, fn

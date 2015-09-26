@@ -6,7 +6,11 @@ defmodule ChatbotDSL.Handler do
 
   use Hedwig.Handler
 
-  def handle_event(%Message{} = msg, opts) do
+  def handle_event(%Message{body: ""}, opts) do
+    # Ignore empty messages
+    {:ok, opts}
+  end
+  def handle_event(%Message{}=msg, opts) do
     responses = %ChatbotDSL.Message{body: msg.body}
                 |> ChatbotDSL.Chatbot.scatter_gather
     for response <- responses do
@@ -16,9 +20,10 @@ defmodule ChatbotDSL.Handler do
   end
   def handle_event(_, opts), do: {:ok, opts}
 
-  defp handle_response(msg, %ChatbotDSL.Response{messages: messages}) do
+  defp handle_response(msg, %ChatbotDSL.Response{from: from, messages: messages}) do
     for message <- messages do
-      reply(msg, Stanza.body(message.body))
+      msg
+      |> reply(Stanza.body(["[#{from}] #{message.body}"]))
     end
   end
 end
